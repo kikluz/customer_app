@@ -11,6 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20160927221036) do
+
+  create_table "customers", force: :cascade do |t|
+    t.string   "given_name"
+    t.string   "family_name"
+    t.string   "email_address"
+    t.string   "address"
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "locality"
+    t.string   "administrative_district_level_1"
+    t.integer  "postal_code"
+    t.string   "country"
+    t.integer  "phone_number"
+    t.integer  "reference_id"
+    t.text     "note"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
 
 end

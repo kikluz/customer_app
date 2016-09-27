@@ -45,7 +45,8 @@ gem 'bourbon'                               # CSS3 Sass mixins
 gem 'neat'                                  # Sass responsive grid]
 gem 'refills'                               # refills
 gem 'font-awesome-rails'                    # Multi-purpose icon fonts
-gem 'sht_rails'                             # js handlebar templates
+gem 'sht_rails'
+gem 'simple_form'                          # js handlebar templates
 
 ###################
 # logging
