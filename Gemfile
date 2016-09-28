@@ -21,6 +21,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc		# bundle exec rake doc:rails generates the 
 # gem 'unicorn'									              # Use Unicorn as the app server
 # gem 'capistrano-rails', group: :development	# Use Capistrano for deployment
 
+gem 'rest-client'   # for accessing squareup
 group :production do
   gem 'pg'
 end

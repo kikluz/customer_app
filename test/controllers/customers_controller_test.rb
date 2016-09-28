@@ -17,8 +17,12 @@ class CustomersControllerTest < ActionController::TestCase
   end
 
   test "should create customer" do
+
+    # stub create_squareup_customer
+    @controller.stubs(:create_squareup_customer).returns(true)
+
     assert_difference('Customer.count') do
-      post :create, customer: { address: @customer.address, address_line_1: @customer.address_line_1, address_line_2: @customer.address_line_2, administrative_district_level_1: @customer.administrative_district_level_1, country: @customer.country, email_address: @customer.email_address, family_name: @customer.family_name, given_name: @customer.given_name, locality: @customer.locality, note: @customer.note, phone_number: @customer.phone_number, postal_code: @customer.postal_code, reference_id: @customer.reference_id }
+      post :create, customer: { address_line_1: @customer.address_line_1, address_line_2: @customer.address_line_2, country: @customer.country, email_address: @customer.email_address, family_name: @customer.family_name, given_name: @customer.given_name, phone_number: @customer.phone_number, postal_code: @customer.postal_code }
     end
 
     assert_redirected_to customer_path(assigns(:customer))
@@ -35,7 +39,7 @@ class CustomersControllerTest < ActionController::TestCase
   end
 
   test "should update customer" do
-    patch :update, id: @customer, customer: { address: @customer.address, address_line_1: @customer.address_line_1, address_line_2: @customer.address_line_2, administrative_district_level_1: @customer.administrative_district_level_1, country: @customer.country, email_address: @customer.email_address, family_name: @customer.family_name, given_name: @customer.given_name, locality: @customer.locality, note: @customer.note, phone_number: @customer.phone_number, postal_code: @customer.postal_code, reference_id: @customer.reference_id }
+    patch :update, id: @customer, customer: { address_line_1: @customer.address_line_1, address_line_2: @customer.address_line_2, country: @customer.country, email_address: @customer.email_address, family_name: @customer.family_name, given_name: @customer.given_name, phone_number: @customer.phone_number, postal_code: @customer.postal_code }
     assert_redirected_to customer_path(assigns(:customer))
   end
 

@@ -4,28 +4,18 @@ one:
   given_name: MyString
   family_name: MyString
   email_address: MyString
-  address: MyString
   address_line_1: MyString
   address_line_2: MyString
-  locality: MyString
-  administrative_district_level_1: MyString
   postal_code: '12121'
   country: MyString
   phone_number: '111.222.3333'
-  reference_id: '1'
-  note: MyText
 
 two:
   given_name: MyString
   family_name: MyString
   email_address: MyString
-  address: MyString
   address_line_1: MyString
   address_line_2: MyString
-  locality: MyString
-  administrative_district_level_1: MyString
   postal_code: '12121'
   country: MyString
   phone_number: '111.222.3333'
-  reference_id: '1'
-  note: MyText

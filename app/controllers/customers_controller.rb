@@ -1,3 +1,5 @@
+require 'rest-client'
+
 class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
 
@@ -27,12 +29,35 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     respond_to do |format|
-      if @customer.save
-        format.html { redirect_to @customer, notice: 'Customer was successfully created.' }
-        format.json { render :show, status: :created, location: @customer }
-      else
-        format.html { render :new }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
+
+      # save rails customer
+      ActiveRecord::Base.transaction do
+        if @customer.save
+
+          # taking customer data and posting it to squareup
+          create_squareup_customer({
+            "given_name": @customer.given_name,
+            "family_name": @customer.family_name,
+            "email_address": @customer.email_address,
+            "phone_number": @customer.phone_number,
+            "address": {
+              "address_line_1": @customer.address_line_1,
+              "address_line_2": @customer.address_line_2,
+              "locality": '',
+              "administrative_district_level_1": '',
+              "postal_code": @customer.postal_code,
+              "country": @customer.country
+            },
+            "reference_id": '',
+            "note": ''
+          })
+
+          format.html { redirect_to @customer, notice: 'Customer was successfully created.' }
+          format.json { render :show, status: :created, location: @customer }
+        else
+          format.html { render :new }
+          format.json { render json: @customer.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -70,5 +95,17 @@ class CustomersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def customer_params
       params.require(:customer).permit(:given_name, :family_name, :email_address, :address, :address_line_1, :address_line_2, :locality, :administrative_district_level_1, :postal_code, :country, :phone_number, :reference_id, :note)
+    end
+
+    def create_squareup_customer(customer_hash)
+      begin
+        headers = {:Authorization => SQUAREUP_CONFIG['auth'], accept: :json}
+        result = RestClient.post 'https://connect.squareup.com/v2/customers', customer_hash.to_json, headers
+        return result
+      rescue => e
+        Rails.logger.error e.inspect
+        raise
+      end
+
     end
 end
