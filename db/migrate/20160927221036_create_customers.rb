@@ -9,10 +9,10 @@ class CreateCustomers < ActiveRecord::Migration
       t.string :address_line_2
       t.string :locality
       t.string :administrative_district_level_1
-      t.integer :postal_code
+      t.string :postal_code
       t.string :country
-      t.integer :phone_number
-      t.integer :reference_id
+      t.string :phone_number
+      t.string :reference_id
       t.text :note
 
       t.timestamps null: false
