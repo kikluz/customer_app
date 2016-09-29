@@ -12,6 +12,12 @@ class CustomersController < ApplicationController
   # GET /customers/1
   # GET /customers/1.json
   def show
+
+    # TODO: get the squareup customer
+    #@customer.squareup_customer_id
+
+
+
   end
 
   # GET /customers/new
@@ -35,7 +41,7 @@ class CustomersController < ApplicationController
         if @customer.save
 
           # taking customer data and posting it to squareup
-          create_squareup_customer({
+          squareup_customer_id = create_squareup_customer({
             "given_name": @customer.given_name,
             "family_name": @customer.family_name,
             "email_address": @customer.email_address,
@@ -51,6 +57,7 @@ class CustomersController < ApplicationController
             "reference_id": '',
             "note": ''
           })
+          @customer.update_attributes(squareup_customer_id: squareup_customer_id)
 
           format.html { redirect_to @customer, notice: 'Customer was successfully created.' }
           format.json { render :show, status: :created, location: @customer }
@@ -100,8 +107,9 @@ class CustomersController < ApplicationController
     def create_squareup_customer(customer_hash)
       begin
         headers = {:Authorization => SQUAREUP_CONFIG['auth'], accept: :json}
-        result = RestClient.post 'https://connect.squareup.com/v2/customers', customer_hash.to_json, headers
-        return result
+        response = RestClient.post 'https://connect.squareup.com/v2/customers', customer_hash.to_json, headers
+        squareup_customer = JSON.parse(response)
+        return squareup_customer['customer']['id']
       rescue => e
         Rails.logger.error e.inspect
         raise
