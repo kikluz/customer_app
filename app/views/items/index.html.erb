@@ -1,0 +1,7 @@
+
+<% @items.each do |item| %>
+  <h1><%= item['name'] %><h1>
+  <p><%= item['description'] %></p>
+  <p><%= image_tag item['master_image']['url'] %></p>
+  <br>
+<% end %>
